@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block contentblock %}
+    <style>
+        section {
+            width: 100%;
+            float: left;
+        }
+
+        .image-block {
+            float: left;
+            width: 100%;
+            margin-bottom: 100px;
+            margin-left: 10%;
+        }
+
+        .banner-section {
+            background-image: url("{% static 'images/programming-593312_1920.jpg' %}");
+            height: 70%;
+            width: 100%;
+            left: 0;
+            position: absolute;
+            top: 0;
+            background-position: 0;
+        }
+    </style>
+    <section class="banner-section">
+    </section>
+    <section class="post-content-section">
+    <div class="container">
+
+    <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 post-title-block" style="color: white">
+
+        <h1 class="text-center" style="padding-top: 10%">We are Team CO-IDE</h1>
+        <ul class="list-inline text-center">
+            <li>CODE |</li>
+            <li>LEARN |</li>
+            <li>SHARE|</li>
+        </ul>
+    </div>
+
+    <section class="row content_about page-content">
+
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-8 who_we_are" style="padding-top: 15%">
+                    <h6 class="label label-defatult about_var">who we are</h6>
+                    <h3 class="team_page_title">About Us</h3>
+                    <p class="team_page_para about_var">Co-ide team provide coding playground for programmers and
+                        non-programmers:</p>
+
+                    <p>IDE is plateform which provide coding features for developing the Software, CO-IDE is smart Web
+                        IDE, it is smart because it performs on real
+                        time preview feature.It is specially for those who work as web developer but it is open source
+                        that is free to all either they are professional
+                        programmers or beginners in programming.CO-IDE supports the basic languages such as html,css and
+                        javascript which are must to be learn as a web
+                        developer,because these languages are common in every programming language either python or
+                        php.Spending time over here provide you knowledge
+                        gaining and keep you sharp in Coding ,We update articles on each languages which is beneficial
+                        for beginners who have less knowledge about HTML,
+                        CSS and JAVASCRIPT.Through the articles they can gain the basic knowledge about tags,functions
+                        and styling functions supported by all these
+                        languages.</p>
+                    <p><u>Functioning based on the realtime preview which supports for CSS,HTMl and JAVASCRIPT.</u>
+                        When you login into CO-IDE, just switch over coding ground to start coding, and save your script
+                        into our database, you can embed your code into
+                        another website, you need to copy whole code written in html or css or javascript and paste
+                        there, make your styling of webpage according
+                        to your own written script.
+                        If there is any problem using CO-IDE just give your feedback to us ,Our team solve that problem
+                        anyhow and also you can give your comments over
+                        articles or scipts, through facebook plugin or our comment system.
+                        <br><h4><b>Thank You</b></h4><br>
+                    <h5><b>Team Co-IDE,</b></h5></p>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+
+            <div class="row">
+                <div class="col-sm-8">
+                    <h4 class="team_page_title">Developer Team</h4>
+                    <p class="team_page_para about_var"><u>Trio of team developed a codingground to accomplish easy
+                        programming
+                        and
+                        learning.</u></p>
+                    <div class="w3-container w3-center w3-animate-zoom">
+                        <div class="row">
+                            <div class="col-xs-3 col-sm-4 col-md-3 team_member">
+                                <img src="{% static 'images/dev.jpg' %}" alt="" class="img-responsive">
+                                <h4>Devansh Mishra</h4>
+                                <h6>Co-Founder <br>and President</h6>
+                            </div>
+                            <div class="col-xs-3 col-sm-4 col-md-3 team_member">
+                                <img src="{% static 'images/ajeet.jpg' %}" alt="" class="img-responsive">
+                                <h4>Ajeet Singh Vashisth</h4>
+                                <h6>Co-Founder &amp; <br>President</h6>
+                            </div>
+                            <div class="col-xs-3 col-sm-4 col-md-3 team_member">
+                                <img src="{% static 'images/ajay.jpg' %}" alt="" class="img-responsive">
+                                <h4>Ajay sonker</h4>
+                                <h6>Co-Founder &amp; <br>President</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pull-right emergency-contact">
+                        <div class="pull-left">
+                            <span><i class="fa fa-envelope-o"></i></span>
+                            <div class="infos_col">
+                                <h6>email us at</h6>
+                                <a href="mailto:devanshmishra872@gmail.com"><h5>devanshmishra872@gmail.com</h5></a>
+                                <a href="mailto:ajaysonker14@gmail.com"><h5>ajaysonker14@gmail.com</h5></a>
+                                <a href="mailto:ajiet.vashishth.8@gmail.com"><h5> ajiet.vashishth.8@gmail.com</h5></a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="pull-left">
+                        <span class="rotate"><i class="fa fa-phone"></i></span>
+                        <div class="infos_col">
+                            <h6>call us now</h6>
+                            <h4>+918765945870</h4>
+                            <h4>+918299180054</h4>
+                            <h4>+917071237096</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </section>
+
+
+{% endblock %}
+

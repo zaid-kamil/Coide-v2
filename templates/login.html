@@ -1,0 +1,230 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block contentblock %}
+
+    <style>
+        button#facebook {
+            padding-left: 5%;
+            padding-right: 5%;
+            margin-left: 3%;
+            margin-top: 5%;
+            padding-top: 3%;
+            padding-bottom: 3%;
+            border-color: #2d5073;
+            background-color: #3b5998;
+            color: white;
+            background-image: url({% static 'images/facebook-icon.png' %});
+        }
+
+        button#github {
+            padding-left: 5%;
+            padding-right: 5%;
+            padding-top: 3%;
+            padding-bottom: 3%;
+            margin-left: 5%;
+            border-color: #2d5073;
+            background-color: #3b5998;
+        }
+
+        #myCarousel .nav a small {
+            display: block;
+        }
+
+        #myCarousel .nav {
+            background: #eee;
+        }
+
+        .nav-justified > li > a {
+            border-radius: 0px;
+        }
+
+        .nav-pills > li[data-slide-to="0"].active a {
+            background-color: #16a085;
+
+        }
+
+        .nav-pills > li[data-slide-to="1"].active a {
+            background-color: #e67e22;
+        }
+
+        .nav-pills > li[data-slide-to="2"].active a {
+            background-color: #2980b9;
+        }
+
+        .nav-pills > li[data-slide-to="3"].active a {
+            background-color: #8e44ad;
+        }
+
+        h1 {
+            color: white;
+            font-weight: 100;
+        }
+
+        body {
+            background: url("{% static 'images/computer.png' %}");
+            background-size: cover;
+
+            padding: 0;
+            margin: 0;
+        }
+
+        .slide_para {
+            color: white !important;
+        }
+    </style>
+
+
+    <div class="container-fluid">
+
+    <div class="row">
+
+        <br><br>
+        <div class="col-md-7">
+            <div class="container-fluid">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <img src="{% static 'images/code.jpg' %}" alt="">
+                            <div class="carousel-caption">
+                                <h1>
+                                    <u>Coding in HTML,CSS,JS</u></h1>
+                                <p class="slide_para">
+                                <h2>"We are Team coide which provide a codingground where you can start coding with the
+                                    basic HTML and design with css and make responsive with
+                                    java script"</h2>
+                                </p>
+                            </div>
+                        </div>
+                        <!-- End Item -->
+                        <div class="item">
+                            <img src="{% static 'images/test.jpg' %}" alt="">
+                            <div class="carousel-caption">
+                                <h1>
+                                    <u>Test your Code</u></h1>
+                                <p class="slide_para">
+                                <h2>"In whatever language(html/css/js) you write code,you will get a quickly output
+                                    which is based on real time feature "</h2></p>
+                            </div>
+                        </div>
+                        <!-- End Item -->
+                        <div class="item">
+                            <img src="{% static 'images/coll3.jpg' %}" alt="">
+                            <div class="carousel-caption">
+                                <h1>
+                                    <u>Collaborative coding</u></h1>
+                                <p class="slide_para">
+                                <h2>"A Collaborative Plateform where all the Programmers and Non-programmers come
+                                    together and start to code"</h2></p>
+                            </div>
+                        </div>
+                        <!-- End Item -->
+                        <div class="item">
+                            <img src="{% static 'images/books1.jpg' %}" alt="">
+                            <div class="carousel-caption">
+                                <h1>
+                                    <u>Learn About Codescripts</u></h1>
+                                <p class="slide_para">
+                                <h2>"Study material, Containing the Basic introduction about the HTML ,CSS & JAVASCRIPT
+                                    which helps to start coding"</h2></p>
+                            </div>
+                        </div>
+                        <!-- End Item -->
+                    </div>
+                    <!-- End Carousel Inner -->
+                    <ul class="nav nav-pills nav-justified">
+                        <li data-target="#myCarousel" data-slide-to="0"><a href="#"><h4><b>Code</b></h4>
+
+                        </a></li>
+                        <li data-target="#myCarousel" data-slide-to="1"><a href="#"><h4><b>Test</b></h4>
+
+                        </a></li>
+                        <li data-target="#myCarousel" data-slide-to="2"><a href="#"><h4><b>Collaboration</b></h4>
+
+                        </a></li>
+                        <li data-target="#myCarousel" data-slide-to="3"><a href="#"><h4><b>Learn</b></h4>
+
+                        </a></li>
+                    </ul>
+                </div>
+                <!-- End Carousel -->
+            </div>
+
+        </div>
+
+        <div class="col-md-4  col-sm-4 " style="color: #2b9b7c;">
+            <div class="panel panel-primary">
+                <div class="panel-heading" style="color: #2b9b7c">
+                    <h1 style="color: white">sign in to continue</h1>
+                </div>
+                <div>
+                    {{ form }}
+                    {% if form.errors %}
+                        <p class="alert-danger alert">your email or password doesn't not match</p>
+                    {% endif %}
+                    {% if next %}
+                        {% if user.is_authenticated %}
+                            <p class="alert-danger alert">your are not authorized to visit this page</p>
+                        {% else %}
+                            <p class="alert-default alert">Please login to continue</p>
+                        {% endif %}
+                    {% endif %}
+
+
+                </div>
+                <div class="social-wrap a">
+                    <button id="facebook"><a href="{% url 'social:begin' 'facebook' %}"><b style="color: white">Login
+                        with Facebook</b></a>
+                        <button id="github"><a href="{% url 'social:begin' 'github' %}"><b style="color: white">Login
+                            with GitHub</b></a></button>
+                    </button>
+
+
+                    <div class="panel-body">
+                        <p><strong>-- OR --</strong></p>
+                        <form action="" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ forms|crispy }}
+                            <input type="submit" class="btn-default" value="login now">
+                            <button><a href="{% url "register" %}" style="color:black">Register Now </a></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+    <script>
+        {% if not user.is_authenticated %}
+            $('.logout_link').css('display', 'none');
+        {% endif %}
+
+        $(document).ready(function () {
+            $('#myCarousel').carousel({
+                interval: 4000
+            });
+
+            var clickEvent = false;
+            $('#myCarousel').on('click', '.nav a', function () {
+                clickEvent = true;
+                $('.nav li').removeClass('active');
+                $(this).parent().addClass('active');
+            }).on('slid.bs.carousel', function (e) {
+                if (!clickEvent) {
+                    var count = $('.nav').children().length - 1;
+                    var current = $('.nav li.active');
+                    current.removeClass('active').next().addClass('active');
+                    var id = parseInt(current.data('slide-to'));
+                    if (count == id) {
+                        $('.nav li').first().addClass('active');
+                    }
+                }
+                clickEvent = false;
+            });
+        });
+    </script>
+{% endblock %}

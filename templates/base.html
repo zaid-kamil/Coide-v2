@@ -1,0 +1,186 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Welcome to Co-ide</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link href='https://fonts.googleapis.com/css?family=Karla:400,400italic,700italic,700' rel='stylesheet'
+          type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href="{% static 'tellme/feedback.min.css' %}" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,400italic,700,700italic' rel='stylesheet'
+          type='text/css'>
+
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+    <!--Bootstrap Select-->
+    <link rel="stylesheet" href="{% static 'vendors/bootstrap-select/css/bootstrap-select.min.css' %}">
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <!--Owl Carousel-->
+    <link rel="stylesheet" href="{% static 'vendors/owl.carousel/owl.carousel.css' %}">
+    <!--Magnific Popup-->
+    <link rel="stylesheet" href="{% static 'vendors/magnific-popup/magnific-popup.css' %}">
+
+    <!--Theme Styles-->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/theme.css' %}">
+    <!--[if lt IE 9]>
+
+        <script src="js/html5shiv.min.js"></script>
+        <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+        .search_pos {
+            left: -50px !important;
+        }
+
+        .vertical-right-aligned {
+            transform: rotate(-90deg);
+            transform-origin: 100% 100%;
+            position: fixed;
+            right: 0;
+            top: 50%;
+            z-index: 100;
+        }
+
+        .pad {
+            margin-top: 10px;
+        }
+
+        .affix-top, .affix {
+            position: relative !important;
+            margin-bottom: 0 !important;
+
+        }
+
+        .navbar-brand small {
+            display: block;
+            font-size: 15px;
+            padding-top: 7%;
+        }
+
+        .navbar-brand {
+            font-family: Calibri, sans-serif;
+            font-size: 35px;
+            line-height: 12px;
+            padding-top: 12px;
+            padding-bottom: 5px;
+            color: #003eff;
+        }
+
+
+    </style>
+
+
+
+    {% block styleblock %}
+    {% endblock %}
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-static-top navbar2">
+    <div class="container">
+        <div class="navbar-header">
+
+            <a class="navbar-brand" href="{% url "login" %}">
+                <b style="color: white">CO-IDE</b>
+                <small style="color:white;"><b>(Realtime Codingground)</b></small>
+            </a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mainNav"
+                    aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="nav navbar-nav navbar-right">
+                {% if not request.user.is_authenticated %}
+                    <li class='pull-right'><a href='{% url "login" %}'>Login</a></li>
+                {% else %}
+                    <li class='pull-right'><a href='{% url "logout" %}'>Logout</a></li>
+                {% endif %}
+
+                <li class="nav navbar-nav navbar-left">
+                    <a href={% url 'login' %}>Home</a>
+                </li>
+                <li><a href="{% url 'codeScripts' %}">CodeScript</a>
+
+                </li>
+                <li class="dropdown">
+                    <a href={% url 'codenow' %}>CodingGround</a>
+                </li>
+                <li class="dropdown">
+                    <a href={% url 'articles' %}>Articles</a>
+                </li>
+
+                <li class="dropdown">
+                    <a href={% url 'about' %}>About us</a>
+                </li>
+                <ul class="nav social_navbar navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false"><i class="fa fa-search"></i></a>
+                        <ul class="dropdown-menu search_pos">
+                            <li>
+                                <form action="#" method="get" role="form" class="search_form">
+                                    <input type="search" class="form-control" placeholder="Type and press enter">
+                                </form>
+                            </li>
+                        </ul>
+
+                    <li class="#">
+                        <a href={% url 'useraccount' %}>{{ request.user.username }}</a>
+                    </li>
+                    {% comment %}feedback form{% endcomment %}
+
+                    {% comment %}     <li><a class="#" href="{% url 'logout' %}">Logout</a></li>{% endcomment %}
+                </ul>
+
+                {#                            <li class="#">#}
+                <button type="button" id="feedback-btn" class="btn btn-info vertical-right-aligned">
+                    Feedback & Report <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>
+                </button>
+                {#                            </li>#}
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+
+
+{% block contentblock %}
+{% endblock %}
+
+<script
+        src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+<!--Bootstrap Select-->
+<script src="{% static 'vendors/bootstrap-select/js/bootstrap-select.min.js' %}"></script>
+<!--Magnific Popup-->
+<script src="{% static 'vendors/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+<!--Owl Carousel-->
+<script src="{% static "vendors/owl.carousel/owl.carousel.min.js" %}"></script>
+<!--CounterUp-->
+<script src="{% static "vendors/couterup/jquery.counterup.min.js" %}"></script>
+<!--WayPoints-->
+<script src="{% static "vendors/waypoint/waypoints.min.js" %}"></script>
+<!--Theme Script-->
+<script src="{% static "js/theme.js" %}"></script>
+
+<script src="{% static 'tellme/feedback.min.js' %}"></script>
+{% include 'tellme/js_inc.html' %}
+
+{% block javascript %}
+{% endblock %}
+</body>
+</html>

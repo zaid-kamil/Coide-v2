@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block contentblock %}
+    <div id="fb-root"></div>
+    <script>(function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9&appId=747197475458366";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+
+    <section class="row page-header">
+        <div class="container">
+            <marquee><h3><b>“That's the thing about people who think they hate computers. What they really hate is lousy
+                programmers.”</b></h3></marquee>
+        </div>
+    </section>
+
+    <section class="row blog-content page-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+
+                    <article class="post post-type-gallery-row">
+                        <div class="row featured-contents">
+                            <div class="post-gallery">
+                                <div class="item"><img src="{% static "images/glasses-272399_1920.jpg" %}" alt=""></div>
+                                <div class="item"><img src="{% static "images/htmlarticle.png" %}" alt=""></div>
+                                <div class="item"><img src="{% static "images/cssartcile.png" %}" alt=""></div>
+                                <div class="item"><img src="{% static "images/javascript.jpg" %}" alt=""></div>
+                                <div class="item"><img src="{% static "images/bookarticle.jpg" %}" alt=""></div>
+                            </div>
+                        </div>
+                    </article>
+                    <h1>{{ article.category }}  </h1>
+                    {% for article in list %}
+                        <article class="post post-type-gallery row">
+                            <div class="row article-body">
+
+                                <img src="{{ article.banner.url }}" class="img-responsive" alt="">
+                                <h3 class="post-title"><a href="article.html">{{ article.title }}</a></h3>
+                                <ul class="post-meta nav">
+                                    <li class="post-date"><i class="fa fa-calendar-o"></i> <a
+                                            href="#">{{ article.created_at }}</a>
+                                    </li>
+                                    <li class="post-comments"><i class="fa fa-comments"></i> <a
+                                            href="#">{{ article.comments }} comment</a>
+                                    </li>
+                                    <li class="posted-by"><i class="fa fa-user"></i>posted by: <a
+                                            href="#">{{ article.author }}</a></li>
+                                    <li class="category"><i class="fa fa-folder"></i>category: <a
+                                            href="#">{{ article.category }}</a></li>
+                                </ul>
+                                <div class="post-excerpt row">
+                                    <p class="content">{{ article.content|slice:":100" }}</p>
+
+                                    <a href="{{ request.path }}{{ article.id }}"
+                                       class="btn-primary btn-outline dark">Read
+                                        more
+                                    </a>
+
+                                </div>
+
+                            </div>
+                        </article>
+                    {% endfor %}
+                    <ul class="pagination">
+                        {% if list.has_previous %}
+                            <li><a href="?page={{ list.previous_page_number }}">&laquo;</a></li>
+                        {% else %}
+                            <li class="disabled"><span>&laquo;</span></li>
+                        {% endif %}
+                        {% for i in  list.paginator.page_range %}
+                            {% if  list.number == i %}
+                                <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                            {% else %}
+                                <li><a href="?page={{ i }}">{{ i }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if  list.has_next %}
+                            <li><a href="?page={{ list.next_page_number }}">&raquo;</a></li>
+                        {% else %}
+                            <li class="disabled"><span>&raquo;</span></li>
+                        {% endif %}
+                    </ul>
+                    <div class="fb-comments" data-href="http://127.0.0.1:8000/article/" data-numposts="5"></div>
+                </div>
+
+
+                <ul id="search-results">
+                    <input type="text" id="search" name="search"/>
+                    {% if list > 0 %}
+                        <ul class=" articles">
+                            {% for search_text in  list %}
+                                <li>
+                                    <p>{{ search_text }}</p>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No status found.</p>
+                    {% endif %}
+                </ul>
+                <div class="col-md-4 sidebar post-sidebar">
+                    <div class="row m0 widget widget-search">
+                        <h4 class="widget-title">search</h4>
+                        <form action="#" class="row m0 search-form" method="get" role="search">
+                            <div2>
+                                <gcse:search></gcse:search>
+                            </div2>
+                            <script>
+
+                                (function () {
+                                    var cx = '013837355815072367840:mjnag-qhowo';
+                                    var gcse = document.createElement('script');
+                                    gcse.type = 'text/javascript';
+                                    gcse.async = true;
+                                    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+                                    var s = document.getElementsByTagName('script')[0];
+                                    s.parentNode.insertBefore(gcse, s);
+                                })();
+                            </script>
+
+                        </form>
+                    </div>
+
+                    <div class="row m0 widget widget-recent-posts">
+                        <h4 class="widget-title">Recent Added Articles</h4>
+                        <div class="media recent-post">
+                            <ul type="list-style-type:square">
+                                {% for article in list %}
+                                    <div class="media-left">
+                                    <li><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></li>
+                                {% endfor %}</div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        $(function () {
+
+            $('#search').keyup(function () {
+
+                $.ajax({
+                    type: "GET",
+                    url: "/search_text/search_titles/",
+                    data: {
+                        'search_titles': $('#search').val(),
+                        'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()
+                    },
+                    success: searchSuccess,
+                    dataType: 'html'
+                });
+            });
+        });
+
+        function searchSuccess(data, textArticle, jqXHR) {
+            $('#search-results').html(data)
+        }
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block styleblock %}
+    <style type="text/css" media="screen" >
+        body {
+            background-color: #2b9b7c;
+            background-size:cover;
+            padding: 0;
+            margin: 0;
+        }
+
+        .code {
+            position: relative;
+        }
+
+
+        #editorhtml {
+            margin-right: 0;
+            width: 100%;
+            height: 300px;
+            padding: 0;
+
+        }
+
+        #editorcss {
+            width: 100%;
+            height: 300px;
+            padding: 1em;
+        }
+
+        #editorjs {
+            width: 100%;
+            height: 300px;
+            padding: 1em;
+        }
+
+        .coderow .col-md-4 {
+            margin: 0;
+            padding: 0;
+        }
+
+        .preview {
+            position: relative;
+            top: -15px;
+            border: #2aabd2 2px solid;
+            box-sizing: border-box;
+            padding: 0;
+            box-shadow: inset 2px 2px 0px #000;
+            background: #fff;
+            height: 500px;
+            overflow: auto;
+        }
+    </style>
+
+{% endblock %}
+{% block contentblock %}
+    <button type="btn"  onclick="alert('Want to save?')">Save
+    <button type="btn "  onclick="alert('Want to clear?')">clear
+    <button type="btn">Script Name
+    </button>
+    <div class="container-fluid">
+        <div class="row coderow">
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <h5 style="text-align:center;color: black" ><b>HTML</b></h5>
+                    <div class="code">
+                        <div id="editorhtml"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <h5 style="text-align:center;color: black" ><b>CSS</b></h5>
+                    <div class="code">
+                        <div id="editorcss"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+
+                    <div class="code">
+                        <h5 style="text-align:center;color: black" ><b>JAVASCRIPT</b></h5>
+                        <div id="editorjs"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <span id="css_area">
+
+        </span>
+        <div class="coderow row preview">
+
+        </div>
+        <span id="js_area">
+            <script>
+
+            </script>
+        </span>
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+    <!-- load ace -->
+    <script src="{% static 'vendors/ace/src/ace.js' %}"></script>
+    <!-- load ace language tools -->
+    <script src="{% static 'vendors/ace/src/ext-language_tools.js' %}"></script>
+    <script>
+        // trigger extension
+        ace.require("ace/ext/language_tools");
+        var editor = ace.edit("editorhtml");
+        editor.session.setMode("ace/mode/html");
+        editor.setTheme("ace/theme/monokai");
+        editor.session.getLength();
+
+        document.getElementById('editorhtml').style.fontSize = '18px';
+        document.getElementById('editorcss').style.fontSize = '18px';
+        document.getElementById('editorjs').style.fontSize = '18px';
+
+        // enable autocompletion and snippets
+        editor.setOptions({
+            enableBasicAutocompletion: true,
+            enableSnippets: true,
+            enableLiveAutocompletion: true
+        });
+
+        // trigger extension
+        ace.require("ace/ext/language_tools");
+        var editorcss = ace.edit("editorcss");
+        editorcss.session.setMode("ace/mode/css");
+        editorcss.setTheme("ace/theme/monokai");
+
+        // enable autocompletion and snippets
+        editorcss.setOptions({
+            enableBasicAutocompletion: true,
+            enableSnippets: true,
+            enableLiveAutocompletion: true
+        });
+        //load data from html
+        var preview = $('div.preview');
+        var css_area = $('span#css_area');
+        var js_area = $('span#js_area');
+        var codescript = "";
+        // trigger extension
+        ace.require("ace/ext/language_tools");
+        var editorjs = ace.edit("editorjs");
+        editorjs.session.setMode("ace/mode/javascript");
+        editorjs.setTheme("ace/theme/monokai");
+
+        // enable autocompletion and snippets
+        editorjs.setOptions({
+            enableBasicAutocompletion: true,
+            enableSnippets: true,
+            enableLiveAutocompletion: true
+        });
+        editor.getSession().on('change', function (e) {
+
+            var htmlCode = editor.getValue();
+            preview.html(htmlCode)
+        });
+        editorcss.getSession().on('change', function (e) {
+            var cssCode = "<style>" + editorcss.getValue() + "</style>";
+            css_area.html(cssCode);
+        });
+        editorjs.getSession().on('change', function (e) {
+            var jsCode = editorjs.getValue();
+            js_area.html(jsCode);
+        });
+    </script>
+    <script>
+
+
+    </script>
+
+{% endblock %}
+
+
+

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block contentblock %}
+    <article class="post post-type-gallery row">
+        <div class="row article-body">
+
+            <div style="background-image: url('{{ article.banner.url }}');margin-left:10%;height: 360px;width:650px;margin-top: 3% "></div>
+            <div class="col-md-10 col-md-offset-1">
+                <h2 class="post-title"><a href="article.html">{{ article.title }}</a></h2>
+                <ul class="post-meta nav">
+                    <li class="post-date"><i class="fa fa-calendar-o"></i> <a
+                            href="#">{{ article.timestamp }}</a>
+                    </li>
+
+                    <li class="posted-by"><i class="fa fa-user"></i>posted by: <a
+                            href="#">{{ article.author }}</a></li>
+                    <li class="category"><i class="fa fa-folder"></i>category: <a
+                            href="#">{{ article.category }}</a></li>
+                    <li class="post-comments"><i class="fa fa-comments">{{ article.comments }}</i> <a href="#"></a>
+                    </li>
+                </ul>
+                <div class="post-excerpt row">
+                    <p class="content">{{ article.content|linebreaksbr }}</p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-8 col-md-offset-1">
+
+            <p class='lead'>Comments</p>
+            {% if request.user.is_authenticated %}
+                <form method="POST" action="{{ request.path }}"> {% csrf_token %}
+                    {{ comment_form|crispy }}
+                    <input type='hidden' value='{{ article.id }}' name="article_id">
+                    <input type='submit' value='Post comment' class='btn btn-default'>
+                </form>
+            {% else %}
+                <p>You must login to comment </p>
+            {% endif %}
+            <hr/>
+            {% for comment in comments %}
+
+
+                <p>{{ comment.content }}</p>
+                <footer>via {{ comment.user }} | {{ comment.timestamp|timesince }} ago |
+                    {% if comment.children.count > 0 %}{{ comment.children.count }} Comment
+                        {% if comment.children.count > 1 %}s{% endif %} | {% endif %}   </footer>
+                <div class='comment-reply'>
+                    {% for child_comment in comment.children %}
+                        <blockquote>
+                            <p>{{ child_comment.content }}</p>
+                            <footer>via {{ child_comment.user }} | {{ child_comment.timestamp|timesince }}
+                                ago
+                            </footer>
+
+                        </blockquote>
+                    {% endfor %}
+                </div>
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.AbsolutePath }}">
+                    Share on Facebook|
+                </a>
+                <a href="https://twitter.com/home?status={{ share_string }}%20{{ request.build_absolute_uri }}">
+                  Share on Twitter
+                </a>
+                <hr/>
+            {% endfor %}
+        </div>
+
+    </article>
+
+
+{% endblock %}
